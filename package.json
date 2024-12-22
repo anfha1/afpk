@@ -1,0 +1,23 @@
+{
+  "name": "afpk",
+  "version": "1.1.0",
+  "main": "index.js",
+  "type": "module",
+  "description": "Package chứa các modun của af-core",
+  "author": "AF-Tech/@david",
+  "license": "AF-Tech",
+  "imports": {
+    "#helper/*.mjs": "./helper/*.mjs",
+    "#lib/*.mjs": "./lib/*.mjs",
+    "#modun/*.mjs": "./modun/*.mjs"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "express": "^4.18.2",
+    "fs-extra": "^11.2.0",
+    "googleapis": "^144.0.0",
+    "http-proxy-middleware": "^3.0.3",
+    "luxon": "^3.4.4",
+    "socket.io": "^4.7.5"
+  }
+}
