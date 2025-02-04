@@ -24,6 +24,7 @@ const ilog_lang = (project, type, log_lang_pre, ...log) => {
 const f_log = {
   ...console,
   ilog,
+  config,
 
   view(path_file) {
     let data = readFileSync(path_file, { encoding: 'utf8' })

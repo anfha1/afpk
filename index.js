@@ -8,8 +8,8 @@ export { default as Device } from './modun/Device.mjs'
 
 import * as app from './helper/app.mjs'
 import * as crypt from './helper/crypt.mjs'
-import * as flang from './helper/flang.mjs'
-import * as flog from './helper/flog.mjs'
+import flang from './helper/flang.mjs'
+import flog from './helper/flog.mjs'
 import * as obj from './helper/obj.mjs'
 import * as time from './helper/time.mjs'
 import regFn from './helper/regFn.mjs'
@@ -17,7 +17,7 @@ import regFn from './helper/regFn.mjs'
 export * as server from './lib/server.mjs'
 export * as google from './lib/google.mjs'
 
-export var helper = {
+export const helper = {
   app,
   crypt,
   flang,

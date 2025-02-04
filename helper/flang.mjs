@@ -23,6 +23,7 @@ function debug_log(...params) {
 export default {
   /* các text_code mặc định */
   ...CONST_LANG,
+  config,
 
   /* hàm trả về giá trị */
   get(text_code, lang = 'vi') {
