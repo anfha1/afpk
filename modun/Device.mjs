@@ -1,4 +1,4 @@
-import UAParser from 'ua-parser-js'
+import { UAParser } from 'ua-parser-js'
 
 import { clone as obj_clone } from '#helper/obj.mjs'
 import flog from "#helper/flog.mjs"

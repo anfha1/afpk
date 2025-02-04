@@ -2,7 +2,6 @@ export { default as CronJob } from './modun/CronJob.mjs'
 export { default as Queue } from './modun/Queue.mjs'
 export { default as Wait } from './modun/Wait.mjs'
 export { default as EOn } from './modun/EOn.mjs'
-export { default as MongoDb } from './modun/MongoDb.mjs'
 export { default as Interact } from './modun/Interact.mjs'
 export { default as Device } from './modun/Device.mjs'
 
