@@ -20,6 +20,22 @@ export function passwordValidate(password) {
   return resResult(schema, password)
 }
 
+// validate số điện thoại gồm 10 chữ số bắt đầu bằng số 0
+export function phoneValidate(phone) {
+  const schema = z.string()
+    .min(10, { message: 'Số điện thoại phải có 10 ký tự' })
+    .max(10, { message: 'Số điện thoại phải có 10 ký tự' })
+    .regex(/^[0-9]+$/, { message: 'Số điện thoại gồm 10 số bắt đầu bằng số 0' })
+
+  return resResult(schema, phone)
+}
+
+// validate email
+export function emailValidate(email) {
+  const schema = z.string().email({ message: 'Email không hợp lệ' })
+  return resResult(schema, email)
+}
+
 function resResult(schema, data) {
   let result = {
     success: false,
