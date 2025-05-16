@@ -34,13 +34,28 @@ import Database from 'better-sqlite3'
 // }
 
 // triển khai phiên bản v2 tự động nhúng
-export default function () {
-  // thêm các hàm trợ giúp mặc định
-  helper.bind(this)()
+export default Object.assign(
+  server, // Nhúng thư viện service
+  {
+    // Thêm các hàm trợ giúp
+    helper,
 
-  // thêm thư viện sqlite3
-  this.Database = Database
+    // thêm thư viện sqlite3
+    Database,
 
-  // thêm thư viện cấu hình máy chủ
-  server.bind(this)()
-}
+    afpkBind(obj, exclude = ['afpkBind', 'start', 'app', 'Database', 'express'], root = obj) {
+      for (const key in obj) {
+        if (!obj.hasOwnProperty(key) || exclude.includes(key)) continue;
+
+        const val = obj[key];
+
+        if (typeof val === 'function') {
+          obj[key] = val.bind(root);
+        } else if (typeof val === 'object' && val !== null) {
+          this.afpkBind(val, [], root);
+        }
+      }
+      return obj;
+    },
+  }
+)

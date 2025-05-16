@@ -7,11 +7,9 @@ export const arrHelper = {
   }
 }
 
-export default function helper() {
-  this.helper = {
-    crypt: {
-      encode,
-      decode,
-    },
-  }
+export default {
+  crypt: {
+    encode,
+    decode,
+  },
 }
