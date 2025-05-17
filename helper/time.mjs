@@ -1,18 +1,17 @@
-import { DateTime } from "luxon"
+export default {
+  now() {
+    return this.DateTime.local({ zone: "Asia/Bangkok" })
+  },
 
-// cách lấy timestamp .toMillis()
-export function now() {
-  return DateTime.local({ zone: "Asia/Bangkok" })
-}
+  createDateTimeFromObj(timeObj) {
+    return this.DateTime.fromObject(timeObj, { zone: "Asia/Bangkok" })
+  },
 
-export function createDateTimeFromObj(timeObj) {
-  return DateTime.fromObject(timeObj, { zone: "Asia/Bangkok" })
-}
+  intToTime(timestamp) {
+    return this.DateTime.fromMillis(timestamp)
+  },
 
-export function intToTime(timestamp) {
-  return DateTime.fromMillis(timestamp)
-}
-
-export function ISO(stringTime) {
-  return DateTime.fromISO(stringTime)
+  iso(stringTime = '') {
+    return this.DateTime.fromISO(stringTime)
+  }
 }

@@ -1,4 +1,7 @@
-import { encode, decode } from './crypt.mjs'
+import crypt from './crypt.mjs'
+import time from './time.mjs'
+import file from './file.mjs'
+
 export * as objHelper from './obj.mjs'
 
 export const arrHelper = {
@@ -8,8 +11,7 @@ export const arrHelper = {
 }
 
 export default {
-  crypt: {
-    encode,
-    decode,
-  },
+  crypt,
+  time,
+  file,
 }
