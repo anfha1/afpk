@@ -43,7 +43,7 @@ export default Object.assign(
 
     afpkBind(obj = this, exclude = [
       'express', 'fs', 'path', 'Database', 'DateTime',
-      'afpkBind', 'start', 'app',
+      'afpkBind', 'msgDev', 'start', 'app',
     ], root = obj) {
       for (const key in obj) {
         if (!obj.hasOwnProperty(key) || exclude.includes(key)) continue;
@@ -58,5 +58,13 @@ export default Object.assign(
       }
       return obj;
     },
+
+    dev: false, // chế độ dev dùng để kiểm tra các log khi mở chế độ dev
+    // hàm gửi log nếu chế độ dev mở
+    msgDev(...msg) {
+      if (this.dev) {
+        console.log(...msg)
+      }
+    }
   }
 )
