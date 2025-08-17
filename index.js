@@ -1,6 +1,7 @@
 import path from "path"
 import * as fs from 'fs'
 import { DateTime } from "luxon"
+import Database from 'better-sqlite3'
 
 import helper from './helper/index.mjs'
 import server from './lib/server.mjs'
@@ -12,6 +13,7 @@ export default Object.assign(
     // thêm các package cần thiết
     fs, path,
     DateTime,
+    Database,
 
     // Thêm các hàm trợ giúp
     helper,
