@@ -1,6 +1,7 @@
 import crypt from './crypt.mjs'
 import time from './time.mjs'
 import file from './file.mjs'
+import config from './config.mjs'
 
 export * as objHelper from './obj.mjs'
 
@@ -14,4 +15,5 @@ export default {
   crypt,
   time,
   file,
+  config,
 }
