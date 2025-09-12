@@ -14,7 +14,7 @@ export default class {
   }
 
   active() {
-    while(this.list_task.length > 0 && this.max_task_process > this.num_task_in_process) {
+    while (this.list_task.length > 0 && this.max_task_process > this.num_task_in_process) {
       let cb = this.list_task.shift()
       this.num_task_in_process++
       cb(() => {

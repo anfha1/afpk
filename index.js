@@ -6,6 +6,8 @@ import Database from 'better-sqlite3'
 import helper from './helper/index.mjs'
 import server from './lib/server.mjs'
 
+import modun from './modun/index.mjs'
+
 // triển khai phiên bản v2 tự động nhúng
 export default Object.assign(
   server, // Nhúng thư viện service
@@ -14,13 +16,14 @@ export default Object.assign(
     fs, path,
     DateTime,
     Database,
+    modun,
 
     // Thêm các hàm trợ giúp
     helper,
 
     afpkBind(obj = this, exclude = [
       'express', 'fs', 'path', 'Database', 'DateTime',
-      'afpkBind', 'msgDev', 'start', 'app',
+      'afpkBind', 'msgDev', 'start', 'app', 'modun',
     ], root = obj) {
       for (const key in obj) {
         if (!obj.hasOwnProperty(key) || exclude.includes(key)) continue;
