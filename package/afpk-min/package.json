@@ -1,0 +1,27 @@
+{
+  "name": "afpk-min",
+  "version": "1.1.1",
+  "main": "index.js",
+  "description": "Package chứa các thư viện của af-tech",
+  "author": "AF-Tech/@david",
+  "license": "MIT",
+  "scripts": {
+    "pls": "npm i && npm publish"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "cookie": "^1.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "express": "^5.1.0",
+    "fs-extra": "^11.3.2",
+    "googleapis": "^162.0.0",
+    "http-proxy-middleware": "^3.0.5",
+    "luxon": "^3.7.2",
+    "socket.io": "^4.8.1",
+    "sqlite3": "^5.1.7",
+    "ua-parser-js": "^2.0.6",
+    "zod": "^4.1.12"
+  }
+}

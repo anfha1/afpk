@@ -1,11 +1,14 @@
 {
   "name": "afpk",
-  "version": "2.0.7",
+  "version": "2.2.7",
   "main": "index.js",
   "type": "module",
   "description": "Package chứa các modun của af-core",
   "author": "AF-Tech/@david",
   "license": "AF-Tech",
+  "scripts": {
+    "build:afpk": "webpack --config afpk.webpack.config.cjs"
+  },
   "imports": {
     "#helper/*.mjs": "./helper/*.mjs",
     "#lib/*.mjs": "./lib/*.mjs",
@@ -18,19 +21,44 @@
     "./helper": "./helper/index.mjs"
   },
   "dependencies": {
-    "better-sqlite3": "^12.2.0",
+    "better-sqlite3": "^12.4.1",
     "cookie": "^1.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
-    "express": "^4.21.2",
-    "fs-extra": "^11.3.0",
-    "googleapis": "^144.0.0",
-    "http-proxy-middleware": "^3.0.3",
-    "luxon": "^3.5.0",
+    "express": "^5.1.0",
+    "fs-extra": "^11.3.2",
+    "googleapis": "^162.0.0",
+    "http-proxy-middleware": "^3.0.5",
+    "javascript-obfuscator": "^4.1.1",
+    "luxon": "^3.7.2",
     "socket.io": "^4.8.1",
     "sqlite3": "^5.1.7",
-    "ua-parser-js": "^2.0.3",
-    "zod": "^3.24.2"
+    "ua-parser-js": "^2.0.6",
+    "webpack": "^5.102.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-obfuscator": "^3.5.1",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "bufferutil": "^4.0.9",
+    "utf-8-validate": "^6.0.5",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "glob": "^8.1.0",
+      "rimraf": "^5.0.5",
+      "gauge": "^5.0.1",
+      "are-we-there-yet": "^4.0.1",
+      "npmlog": "^7.0.1"
+    },
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "bufferutil",
+      "javascript-obfuscator",
+      "sqlite3",
+      "utf-8-validate"
+    ]
   }
 }
