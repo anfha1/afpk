@@ -43,7 +43,6 @@ module.exports = {
       splitStringsChunkLength: 10,
     }, [
       '**/node_modules/**',
-      '**/better-sqlite3/**', // ⛔ tuyệt đối không rối thư viện này
     ]),
   ]
 };
