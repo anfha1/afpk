@@ -6,9 +6,9 @@ import e_on from './EOn.mjs'
 export default class {
   constructor(socket, config = {}) {
     this.socket = socket
-    this.name_secret_emit = config.name_secret_emit ?? 'data_encode'
-    this.name_active_function = config.name_active_function ?? 'active_function'
-    let name_secret_on = config.name_secret_on ?? 'data_encode'
+    this.nameSecretEmit = config.name_secret_emit ?? 'data_encode'
+    this.nameActiveFunction = config.name_active_function ?? 'active_function'
+    let nameSecretOn = config.name_secret_on ?? 'data_encode'
 
     // lắng nghe các sự kiện của B gửi về
     var eA_on = new e_on()
@@ -19,35 +19,35 @@ export default class {
     this.onB = eB_on.add.bind(eB_on)
 
     // lắng nghe sự kiện active fn
-    this.onA(this.name_active_function, (fn_id, param = []) => {
-      regFn.run(fn_id, param)
+    this.onA(this.nameActiveFunction, (fnId, param = []) => {
+      regFn.run(fnId, param)
     })
-    this.onB(this.name_active_function, (fn_id, param = []) => {
-      regFn.run(fn_id, param)
+    this.onB(this.nameActiveFunction, (fnId, param = []) => {
+      regFn.run(fnId, param)
     })
 
-    socket.on(name_secret_on, (data, from) => {
-      let event_decode = decode(data)
-      if (event_decode && event_decode.name && event_decode.param) {
-        if (event_decode.fn_index && event_decode.fn_index.length > 0) {
+    socket.on(nameSecretOn, (data, from) => {
+      let eventDecode = decode(data)
+      if (eventDecode && eventDecode.name && eventDecode.param) {
+        if (eventDecode.fn_index && eventDecode.fn_index.length > 0) {
           // xử lý param fn
-          event_decode.fn_index.map(fn_index => {
-            let fn_id = event_decode.param[fn_index]
-            let fn_name = event_decode.fn_name ?? this.name_active_function
-            event_decode.param[fn_index] = (...param) => {
+          eventDecode.fn_index.map(fnIndex => {
+            let fnId = eventDecode.param[fnIndex]
+            let fnName = eventDecode.fn_name ?? this.nameActiveFunction
+            eventDecode.param[fnIndex] = (...param) => {
               if (from === 1) {
-                this.emitB(fn_name, fn_id, param)
+                this.emitB(fnName, fnId, param)
               } else {
-                this.emitA(fn_name, fn_id, param)
+                this.emitA(fnName, fnId, param)
               }
             }
           })
         }
 
         if (from === 1) {
-          eB_on.run(event_decode.name, event_decode.param)
+          eB_on.run(eventDecode.name, eventDecode.param)
         } else {
-          eA_on.run(event_decode.name, event_decode.param)
+          eA_on.run(eventDecode.name, eventDecode.param)
         }
       }
     })
@@ -61,21 +61,21 @@ export default class {
   }
 
   emit_to(to, name, param) {
-    let fn_index = []
+    let fnIndex = []
     param = param.map((elm, index) => {
       if (typeof elm === 'function') {
-        let id_fn = regFn.push(elm)
-        fn_index.push(index)
-        return id_fn
+        let idFn = regFn.push(elm)
+        fnIndex.push(index)
+        return idFn
       }
       return elm
     })
 
-    this.socket.emit(this.name_secret_emit, encode({
+    this.socket.emit(this.nameSecretEmit, encode({
       name,
       param,
-      fn_index,
-      fn_name: this.name_active_function,
+      fn_index: fnIndex,
+      fn_name: this.nameActiveFunction,
     }), to, 2)
   }
 }

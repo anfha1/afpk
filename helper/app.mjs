@@ -1,16 +1,16 @@
 const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 const charactersLength = characters.length
 
-export function is_obj(obj) {
+export function isObj(obj) {
   return typeof obj === 'object' && !(obj instanceof Array)
 }
 
-export function object_merge_2(obj1, obj2) {
+export function objectMergeTwo(obj1, obj2) {
   Object.keys(obj2).map(key => {
     if (obj1[key]) {
       // tính toán rồi xem thế nào
-      if (is_obj(obj1[key]) && is_obj(obj2[key])) {
-        obj1[key] = object_merge_2(obj1[key], obj2[key])
+      if (isObj(obj1[key]) && isObj(obj2[key])) {
+        obj1[key] = objectMergeTwo(obj1[key], obj2[key])
       } else {
         obj1[key] = obj2[key]
       }
@@ -21,21 +21,21 @@ export function object_merge_2(obj1, obj2) {
   return obj1
 }
 
-export function object_merge(...object_param) {
-  let obj_res = false
-  object_param.map(elm => {
-    if (is_obj(elm)) {
-      if (obj_res) {
-        obj_res = object_merge_2(obj_res, elm)
+export function objectMerge(...objectParam) {
+  let objRes = false
+  objectParam.map(elm => {
+    if (isObj(elm)) {
+      if (objRes) {
+        objRes = objectMergeTwo(objRes, elm)
       } else {
-        obj_res = elm
+        objRes = elm
       }
     }
   })
-  if (!obj_res) {
-    obj_res = {}
+  if (!objRes) {
+    objRes = {}
   }
-  return obj_res
+  return objRes
 }
 
 export function generateString(length) {

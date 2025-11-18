@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 
-import { is_obj } from './obj.mjs'
+import { isObj } from './obj.mjs'
 import flang from './flang.mjs'
 import { ilog } from './ilog.mjs'
 
@@ -12,12 +12,12 @@ export function config(langUse) {
   }
 }
 
-const ilog_lang = (project, type, log_lang_pre, ...log) => {
-  let log_text = flang.get(log_lang_pre, lang)
-  if (log_text) {
-    ilog(project, type, log_text, ...log)
+const ilogLang = (project, type, logLangPre, ...log) => {
+  let logText = flang.get(logLangPre, lang)
+  if (logText) {
+    ilog(project, type, logText, ...log)
   } else {
-    ilog(project, type, [log_lang_pre, lang], ...log)
+    ilog(project, type, [logLangPre, lang], ...log)
   }
 }
 
@@ -28,7 +28,7 @@ const f_log = {
 
   view(path_file) {
     let data = readFileSync(path_file, { encoding: 'utf8' })
-    if (data && is_obj(data)) {
+    if (data && isObj(data)) {
       data = JSON.parse(data)
       if (Array.isArray(data)) {
         data.map(log => {
@@ -43,17 +43,17 @@ const f_log = {
   },
 }
 
-/* Cấu hình các log thông thường là ilog_lang */
-f_log.log = (project, log_lang_pre, ...log) => {
-  ilog_lang(project, 'log', log_lang_pre, ...log)
+/* Cấu hình các log thông thường là ilogLang */
+f_log.log = (project, logLangPre, ...log) => {
+  ilogLang(project, 'log', logLangPre, ...log)
 }
 
-f_log.warn = (project, log_lang_pre, ...log) => {
-  ilog_lang(project, 'warn', log_lang_pre, ...log)
+f_log.warn = (project, logLangPre, ...log) => {
+  ilogLang(project, 'warn', logLangPre, ...log)
 }
 
-f_log.error = (project, log_lang_pre, ...log) => {
-  ilog_lang(project, 'error', log_lang_pre, ...log)
+f_log.error = (project, logLangPre, ...log) => {
+  ilogLang(project, 'error', logLangPre, ...log)
 }
 
 export default f_log

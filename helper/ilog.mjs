@@ -2,29 +2,29 @@ import { writeFileSync } from 'fs';
 import { DateTime } from 'luxon'
 
 var logs = []
-var is_run = 0
+var isRun = 0
 var change = 0
 var pathFolderSave = ''
-var file_name = `log_${ DateTime.now().toFormat('yyyy_MM_dd HH_mm_ss') }.json`;
+var fileName = `log_${ DateTime.now().toFormat('yyyy_MM_dd HH_mm_ss') }.json`;
 
-function save_log() {
+function saveLog() {
   change = 0
 
   // tiến hành ghi file
   if (pathFolderSave) {
-    writeFileSync(`${ pathFolderSave }/${ file_name }`, JSON.stringify(logs))
+    writeFileSync(`${ pathFolderSave }/${ fileName }`, JSON.stringify(logs))
   }
 
   if (change) {
-    setTimeout(save_log, 1000)
+    setTimeout(saveLog, 1000)
   } else {
-    is_run = 0
+    isRun = 0
   }
 }
 
-export function config(path_folder_save) {
-  if (path_folder_save) {
-    pathFolderSave = path_folder_save
+export function config(pathFolderSaveParam) {
+  if (pathFolderSaveParam) {
+    pathFolderSave = pathFolderSaveParam
   }
 }
 
@@ -45,9 +45,9 @@ export function ilog(project, type, ...log) {
 
     // kiểm tra yêu cầu lưu
     change = 1
-    if (!is_run) {
-      is_run = 1
-      setTimeout(save_log, 1000)
+    if (!isRun) {
+      isRun = 1
+      setTimeout(saveLog, 1000)
     }
   }
 }
