@@ -14,7 +14,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.mjs'],
   },
-  externals: [nodeExternals()],
+  externals: [
+    nodeExternals({
+      // Không externalize af-crypt-min, bundle nó vào
+      allowlist: [/^af-crypt-min/]
+    })
+  ],
   /* externals: {
     'fs': 'commonjs fs',
     'path': 'commonjs path',

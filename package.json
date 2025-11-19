@@ -21,6 +21,7 @@
     "./helper": "./helper/index.mjs"
   },
   "dependencies": {
+    "af-crypt-min": "^1.0.0",
     "better-sqlite3": "^12.4.1",
     "cookie": "^1.0.2",
     "cookie-parser": "^1.4.7",
