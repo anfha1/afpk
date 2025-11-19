@@ -6,14 +6,26 @@
 
 ### Installation
 
+**Development (Source Code):**
 ```bash
-# Development (npm link)
+# NPM Link (để debug và phát triển)
 cd afpk && npm link
 cd ../[project] && npm link afpk
 
-# Production
+# Hoặc install từ npm
 pnpm add afpk
 ```
+
+**Production (Obfuscated - Recommended):**
+```bash
+# Sử dụng afpk-min (đã obfuscate để bảo mật)
+pnpm add afpk-min
+```
+
+**Lưu ý:**
+- **Development**: Dùng `afpk` hoặc `npm link afpk` để dễ debug
+- **Production**: Dùng `afpk-min` để bảo mật code (đã obfuscate)
+- `afpk-min` có cùng API với `afpk`, chỉ khác là code đã được obfuscate
 
 ## 📋 Usage
 
