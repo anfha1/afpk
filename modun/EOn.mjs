@@ -1,3 +1,9 @@
+/**
+ * @deprecated This file is deprecated. Use EOn from 'af-common-min' instead.
+ * This file is kept for backward compatibility only.
+ * Import EOn directly from 'af-common-min' or use it via Interact module.
+ */
+
 export default class {
   e_on = {}
 

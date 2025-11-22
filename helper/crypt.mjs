@@ -1,11 +1,11 @@
 /**
  * Crypt Helper
  * 
- * Re-export từ af-crypt-min để sử dụng trong afpk
- * Khi build afpk-min, af-crypt-min sẽ được bundle vào
+ * Re-export từ af-common-min để sử dụng trong afpk
+ * Khi build afpk-min, af-common-min sẽ được bundle vào
  */
 
-import { encode, decode } from 'af-crypt-min'
+import { encode, decode } from 'af-common-min'
 
 // Re-export để giữ nguyên API cũ
 export default {

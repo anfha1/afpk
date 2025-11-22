@@ -1,8 +1,10 @@
-# 🔄 AF Crypt Integration vào AFPK
+# 🔄 AF Common Integration vào AFPK
 
 **Ngày hoàn thành:** 2024  
 **Version:** `afpk-min@1.1.3`  
-**Mục đích:** Tích hợp `af-crypt-min` vào `afpk` và bundle vào `afpk-min`
+**Mục đích:** Tích hợp `af-common-min` vào `afpk` và bundle vào `afpk-min`
+
+> **Lưu ý:** Tài liệu này đã được cập nhật. `afpk` hiện sử dụng `af-common-min` (đã gộp crypt và e2e) thay vì `af-crypt-min` riêng lẻ.
 
 > **Lưu ý:** Xem [Migration Reports](../doc/MIGRATIONS.md) để biết tổng quan tất cả migrations.
 
@@ -13,15 +15,17 @@
 ### 1. AFPK Package
 
 #### Package.json
-- ✅ Thêm `af-crypt-min@^1.0.0` vào dependencies
+- ✅ Thêm `af-common-min` vào dependencies (thay thế `af-crypt-min`)
 
 #### Helper Crypt
-- ✅ `afpk/helper/crypt.mjs` - Updated để re-export từ `af-crypt-min` thay vì implement riêng
+- ✅ `afpk/helper/crypt.mjs` - Updated để re-export từ `af-common-min` thay vì implement riêng
 - ✅ Giữ nguyên API: `afpk.helper.crypt.encode()` và `afpk.helper.crypt.decode()`
+- ✅ `afpk/modun/index.mjs` - Re-export Queue, Wait từ `af-common-min`
+- ✅ `afpk/modun/Interact.mjs` - Re-export EOn từ `af-common-min`
 
 #### Webpack Config
-- ✅ `afpk/afpk.webpack.config.cjs` - Updated để bundle `af-crypt-min` vào `afpk-min`
-- ✅ Sử dụng `allowlist: [/^af-crypt-min/]` trong `nodeExternals` để không externalize
+- ✅ `afpk/afpk.webpack.config.cjs` - Updated để bundle `af-common-min` vào `afpk-min`
+- ✅ Sử dụng `allowlist: [/^af-common-min/]` trong `nodeExternals` để không externalize
 
 ### 2. Backend Projects
 
@@ -58,7 +62,7 @@ export default {
 **Sau:**
 ```javascript
 // afpk/helper/crypt.mjs
-import { encode, decode } from 'af-crypt-min'
+import { encode, decode } from 'af-common-min'
 
 export default {
   encode,
@@ -101,8 +105,8 @@ externals: [nodeExternals()],
 ```javascript
 externals: [
   nodeExternals({
-    // Không externalize af-crypt-min, bundle nó vào
-    allowlist: [/^af-crypt-min/]
+    // Không externalize af-common-min, bundle nó vào
+    allowlist: [/^af-common-min/]
   })
 ],
 ```
@@ -125,7 +129,7 @@ cd afpk
 pnpm run build:afpk
 ```
 
-Khi build, `af-crypt-min` sẽ được bundle vào `afpk-min/index.js`, không cần install riêng.
+Khi build, `af-common-min` sẽ được bundle vào `afpk-min/index.js`, không cần install riêng.
 
 ### 3. Publish afpk-min
 
@@ -135,35 +139,53 @@ pnpm i
 npm publish
 ```
 
-**Lưu ý:** `afpk-min/package.json` không cần có `af-crypt-min` trong dependencies vì nó đã được bundle vào.
+**Lưu ý:** `afpk-min/package.json` không cần có `af-common-min` trong dependencies vì nó đã được bundle vào.
 
 ---
 
 ## 📊 Lợi Ích
 
-1. **Đơn giản hóa dependencies:** Backend projects chỉ cần `afpk-min`, không cần `af-crypt-min` riêng
-2. **Bảo mật:** `af-crypt-min` được bundle và obfuscate cùng với `afpk-min`
+1. **Đơn giản hóa dependencies:** Backend projects chỉ cần `afpk-min`, không cần `af-common-min` riêng
+2. **Bảo mật:** `af-common-min` được bundle và obfuscate cùng với `afpk-min`
 3. **Nhất quán:** Tất cả backend projects dùng cùng một cách truy cập crypt: `afpk.helper.crypt`
-4. **Dễ maintain:** Chỉ cần update `afpk-min` là tất cả projects sẽ có crypt mới
+4. **Dễ maintain:** Chỉ cần update `afpk-min` là tất cả projects sẽ có các modules mới từ `af-common-min`
+5. **Tích hợp đầy đủ:** `af-common-min` bao gồm crypt, wait, queue, e2e và các modules khác
 
 ---
 
 ## ⚠️ Lưu Ý
 
-1. **Frontend vẫn dùng `af-crypt-min` riêng:** Frontend (`af-tech-ui`) vẫn cần `af-crypt-min` riêng vì không dùng `afpk-min`
+1. **Frontend có thể dùng `af-common-min` trực tiếp:** Frontend (`af-tech-ui`) có thể dùng `af-common-min` trực tiếp hoặc qua relative path
 2. **API giữ nguyên:** `afpk.helper.crypt.encode()` và `afpk.helper.crypt.decode()` giữ nguyên API
 3. **Compatibility:** Encoded data từ frontend và backend vẫn tương thích với nhau
+4. **E2E đã được gộp:** Tất cả các hàm E2E (encodeE2E, decodeE2E, etc.) đã được gộp vào `af-common-min/module/crypt.js`
 
 ---
+
+## 📝 Module Status
+
+### ✅ Đã migrate sang af-common-min:
+- **Crypt**: `afpk/helper/crypt.mjs` → Re-export từ `af-common-min`
+- **Queue**: `afpk/modun/index.mjs` → Re-export từ `af-common-min`
+- **Wait**: `afpk/modun/index.mjs` → Re-export từ `af-common-min`
+- **EOn**: `afpk/modun/Interact.mjs` → Import trực tiếp từ `af-common-min`
+
+### ⚠️ Deprecated (giữ lại để backward compatibility):
+- `afpk/modun/Wait.mjs` - Đã deprecated, sử dụng từ `af-common-min` qua `afpk/modun`
+- `afpk/modun/Queue.mjs` - Đã deprecated, sử dụng từ `af-common-min` qua `afpk/modun`
+- `afpk/modun/EOn.mjs` - Đã deprecated, sử dụng từ `af-common-min` trực tiếp
+
+**Lưu ý:** Các file deprecated vẫn hoạt động nhưng nên migrate sang `af-common-min` để đảm bảo tính nhất quán và nhận được các cập nhật mới nhất.
 
 ## 🧪 Testing Checklist
 
 Sau khi build `afpk-min` mới:
 
-- [ ] Test `afpk.helper.crypt.encode()` trong backend
-- [ ] Test `afpk.helper.crypt.decode()` trong backend
-- [ ] Test compatibility với frontend (encoded data có thể decode ở cả hai)
-- [ ] Kiểm tra `afpk-min` bundle có chứa `af-crypt-min` code không
+- [x] Test `afpk.helper.crypt.encode()` trong backend
+- [x] Test `afpk.helper.crypt.decode()` trong backend
+- [x] Test compatibility với frontend (encoded data có thể decode ở cả hai)
+- [x] Kiểm tra `afpk-min` bundle có chứa `af-common-min` code không
+- [x] Test các modules khác từ af-common-min (Wait, Queue, EOn) trong afpk
 
 ---
 

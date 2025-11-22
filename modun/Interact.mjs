@@ -1,7 +1,7 @@
 import { encode, decode } from '#helper/crypt.mjs'
 import regFn from '#helper/regFn.mjs'
 
-import e_on from './EOn.mjs'
+import { EOn } from 'af-common-min'
 
 export default class {
   constructor(socket, config = {}) {
@@ -11,11 +11,11 @@ export default class {
     let nameSecretOn = config.name_secret_on ?? 'data_encode'
 
     // lắng nghe các sự kiện của B gửi về
-    var eA_on = new e_on()
+    var eA_on = new EOn()
     this.onA = eA_on.add.bind(eA_on)
 
     // lắng nghe các sự kiện của B gửi về
-    var eB_on = new e_on()
+    var eB_on = new EOn()
     this.onB = eB_on.add.bind(eB_on)
 
     // lắng nghe sự kiện active fn

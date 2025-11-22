@@ -1,3 +1,9 @@
+/**
+ * @deprecated This file is deprecated. Use Wait from 'af-common-min' instead.
+ * This file is kept for backward compatibility only.
+ * Import from 'afpk/modun' to get Wait from af-common-min.
+ */
+
 export default class {
   status = 0
   list_action = []

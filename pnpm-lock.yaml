@@ -15,9 +15,9 @@ importers:
 
   .:
     dependencies:
-      af-crypt-min:
+      af-common-min:
         specifier: ^1.0.0
-        version: 1.0.0(crypto-js@4.2.0)
+        version: 1.0.0
       better-sqlite3:
         specifier: ^12.4.1
         version: 12.4.1
@@ -261,10 +261,8 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  af-crypt-min@1.0.0:
-    resolution: {integrity: sha512-HaGNnkzZf8bJTsb+111Tbav0TRghsz2DpJ9fZrU4zCr8dmt02nbbZkDuSn2oq+xo9g0IXLBmEZYdCooKXo1d6g==}
-    peerDependencies:
-      crypto-js: ^4.2.0
+  af-common-min@1.0.0:
+    resolution: {integrity: sha512-oiAJwbSwPyr5aydslOPQGpOLw5eEWDpuLHGgEhI8f8GVMrK5ruSaB1QQ1eNjXLrBysC+44vcSUUQaZ4zHd+29g==}
 
   agent-base@6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
@@ -2006,7 +2004,7 @@ snapshots:
 
   acorn@8.8.2: {}
 
-  af-crypt-min@1.0.0(crypto-js@4.2.0):
+  af-common-min@1.0.0:
     dependencies:
       crypto-js: 4.2.0
 

@@ -26,7 +26,7 @@ pnpm add afpk-min
 - **Development**: Dùng `afpk` hoặc `npm link afpk` để dễ debug
 - **Production**: Dùng `afpk-min@^1.1.3` để bảo mật code (đã obfuscate)
 - `afpk-min` có cùng API với `afpk`, chỉ khác là code đã được obfuscate
-- **afpk-min đã bundle af-crypt-min** - Backend chỉ cần `afpk-min`, không cần `af-crypt-min` riêng
+- **afpk-min đã bundle af-common-min** - Backend chỉ cần `afpk-min`, không cần `af-common-min` riêng
 
 ## 📋 Usage
 
@@ -35,7 +35,7 @@ pnpm add afpk-min
 ```javascript
 import { crypt, time, file, config } from 'afpk/helper'
 
-// Crypt functions (từ af-crypt-min đã bundle trong afpk-min)
+// Crypt functions (từ af-common-min đã bundle trong afpk-min)
 afpk.helper.crypt.encode(data, salt)
 afpk.helper.crypt.decode(encodedData, salt)
 ```
@@ -49,7 +49,11 @@ import validator from 'afpk/validator'
 ### Import Modules
 
 ```javascript
-import { CronJob, Device, Queue } from 'afpk/modun'
+import { CronJob, Device, Queue, Wait } from 'afpk/modun'
+
+// Queue và Wait được re-export từ af-common-min (đã bundle trong afpk-min)
+const queue = new Queue(2) // max 2 tasks đồng thời
+const wait = new Wait()
 ```
 
 ## 🔧 Thông Số Kỹ Thuật
@@ -57,7 +61,7 @@ import { CronJob, Device, Queue } from 'afpk/modun'
 - **Version**: 2.2.7 (afpk), 1.1.3 (afpk-min)
 - **Type**: ES Modules
 - **License**: AF-Tech
-- **afpk-min**: Đã bundle `af-crypt-min@^1.0.0` vào trong
+- **afpk-min**: Đã bundle `af-common-min` vào trong (bao gồm crypt, wait, queue, và các modules khác)
 
 ## 📚 Tài Liệu Chi Tiết
 
@@ -69,7 +73,7 @@ Xem [Tài liệu đầy đủ](../doc/projects/afpk.md) để biết:
 - AF Crypt Integration
 
 **Xem thêm:**
-- [AF Crypt Integration](AF_CRYPT_INTEGRATION.md) - Chi tiết tích hợp af-crypt
+- [AF Common Integration](AF_CRYPT_INTEGRATION.md) - Chi tiết tích hợp af-common-min (đã cập nhật từ af-crypt)
 - [Migration Reports](../doc/MIGRATIONS.md) - Tổng hợp migrations
 
 ## 🔗 Liên Kết

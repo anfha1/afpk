@@ -6,18 +6,25 @@ module.exports = {
   mode: 'production',
   target: 'node',
   entry: './index.js', // File entry chính
+  experiments: {
+    outputModule: true, // Enable ES module output
+  },
   output: {
     path: path.resolve(__dirname, 'package', 'afpk-min'),
     filename: 'index.js',
-    libraryTarget: 'commonjs2',
+    module: true, // Build as ES module
+    library: {
+      type: 'module', // ES module format
+    },
   },
   resolve: {
     extensions: ['.js', '.mjs'],
   },
   externals: [
     nodeExternals({
-      // Không externalize af-crypt-min, bundle nó vào
-      allowlist: [/^af-crypt-min/]
+      // Không externalize af-common-min, bundle nó vào
+      // Các native modules (sqlite3, better-sqlite3) sẽ tự động được externalize
+      allowlist: [/^af-common-min/]
     })
   ],
   /* externals: {

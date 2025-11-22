@@ -1,3 +1,9 @@
+/**
+ * @deprecated This file is deprecated. Use Queue from 'af-common-min' instead.
+ * This file is kept for backward compatibility only.
+ * Import from 'afpk/modun' to get Queue from af-common-min.
+ */
+
 export default class {
   listTask = []
   numTaskInProcess = 0
