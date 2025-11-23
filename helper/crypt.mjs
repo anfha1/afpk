@@ -5,7 +5,8 @@
  * Khi build afpk-min, af-common-min sẽ được bundle vào
  */
 
-import { encode, decode } from 'af-common-min'
+import afCommonMin from 'af-common-min'
+const { encode, decode } = afCommonMin.helper.crypt
 
 // Re-export để giữ nguyên API cũ
 export default {

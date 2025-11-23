@@ -9,8 +9,9 @@
  * - Các file Wait.mjs, Queue.mjs, EOn.mjs trong thư mục này đã deprecated
  */
 
-// Re-export từ af-common-min
-import { Queue, Wait } from 'af-common-min'
+// Re-export từ af-common-min (từ module namespace)
+import afCommonMin from 'af-common-min'
+const { Queue, Wait } = afCommonMin.module
 
 // Import các module BE-only
 import CronJob from './CronJob.mjs'

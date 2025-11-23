@@ -62,7 +62,8 @@ export default {
 **Sau:**
 ```javascript
 // afpk/helper/crypt.mjs
-import { encode, decode } from 'af-common-min'
+import afCommonMin from 'af-common-min'
+const { encode, decode } = afCommonMin.helper.crypt
 
 export default {
   encode,
@@ -164,18 +165,18 @@ npm publish
 
 ## 📝 Module Status
 
-### ✅ Đã migrate sang af-common-min:
-- **Crypt**: `afpk/helper/crypt.mjs` → Re-export từ `af-common-min`
-- **Queue**: `afpk/modun/index.mjs` → Re-export từ `af-common-min`
-- **Wait**: `afpk/modun/index.mjs` → Re-export từ `af-common-min`
-- **EOn**: `afpk/modun/Interact.mjs` → Import trực tiếp từ `af-common-min`
+### ✅ Đã migrate sang af-common-min@^1.0.2:
+- **Crypt**: `afpk/helper/crypt.mjs` → Re-export từ `af-common-min.helper.crypt`
+- **Queue**: `afpk/modun/index.mjs` → Re-export từ `af-common-min.module.Queue`
+- **Wait**: `afpk/modun/index.mjs` → Re-export từ `af-common-min.module.Wait`
+- **EOn**: `afpk/modun/Interact.mjs` → Import từ `af-common-min.module.EOn`
 
 ### ⚠️ Deprecated (giữ lại để backward compatibility):
 - `afpk/modun/Wait.mjs` - Đã deprecated, sử dụng từ `af-common-min` qua `afpk/modun`
 - `afpk/modun/Queue.mjs` - Đã deprecated, sử dụng từ `af-common-min` qua `afpk/modun`
 - `afpk/modun/EOn.mjs` - Đã deprecated, sử dụng từ `af-common-min` trực tiếp
 
-**Lưu ý:** Các file deprecated vẫn hoạt động nhưng nên migrate sang `af-common-min` để đảm bảo tính nhất quán và nhận được các cập nhật mới nhất.
+**Lưu ý:** Các file deprecated vẫn hoạt động nhưng nên migrate sang `af-common-min@^1.0.2` với cấu trúc namespace mới để đảm bảo tính nhất quán và nhận được các cập nhật mới nhất.
 
 ## 🧪 Testing Checklist
 

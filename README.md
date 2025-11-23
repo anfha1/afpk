@@ -1,6 +1,6 @@
 # 📦 AFPK - AF-Tech Package
 
-**Package chứa các modun, helper, và validator dùng chung**
+**Package chứa các modun và helper dùng chung**
 
 ## 🚀 Quick Start
 
@@ -26,7 +26,8 @@ pnpm add afpk-min
 - **Development**: Dùng `afpk` hoặc `npm link afpk` để dễ debug
 - **Production**: Dùng `afpk-min@^1.1.3` để bảo mật code (đã obfuscate)
 - `afpk-min` có cùng API với `afpk`, chỉ khác là code đã được obfuscate
-- **afpk-min đã bundle af-common-min** - Backend chỉ cần `afpk-min`, không cần `af-common-min` riêng
+- **afpk-min đã bundle af-common-min@^1.0.2** - Backend chỉ cần `afpk-min`, không cần `af-common-min` riêng
+- **Cấu trúc namespace:** Modules trong `module` namespace, crypt functions trong `helper.crypt` namespace
 
 ## 📋 Usage
 
@@ -40,11 +41,6 @@ afpk.helper.crypt.encode(data, salt)
 afpk.helper.crypt.decode(encodedData, salt)
 ```
 
-### Import Validator
-
-```javascript
-import validator from 'afpk/validator'
-```
 
 ### Import Modules
 
@@ -63,12 +59,38 @@ const wait = new Wait()
 - **License**: AF-Tech
 - **afpk-min**: Đã bundle `af-common-min` vào trong (bao gồm crypt, wait, queue, và các modules khác)
 
+## 📦 Exported Libraries
+
+AFPK export các thư viện sau để backend projects có thể sử dụng trực tiếp:
+
+**Từ af-common-min:**
+- `DateTime` - Date/time handling (luxon)
+- `cryptoJs` - Cryptography library
+
+**Backend libraries:**
+- `express`, `cors`, `cookieParser`, `cookie` - Web framework & middleware
+- `Server` - Socket.io Server
+- `fsExtra` - File system utilities
+- `createProxyMiddleware` - HTTP proxy
+- `UAParser` - User agent parser
+- `Database` - better-sqlite3 Database
+- `sqlite3` - sqlite3 module
+
+```javascript
+import afpk from 'afpk-min'
+
+// Sử dụng các thư viện
+const now = afpk.DateTime.local({ zone: "Asia/Bangkok" })
+const hash = afpk.cryptoJs.MD5("test").toString()
+const db = new afpk.Database(':memory:')
+const parser = new afpk.UAParser()
+```
+
 ## 📚 Tài Liệu Chi Tiết
 
 Xem [Tài liệu đầy đủ](../doc/projects/afpk.md) để biết:
 - API documentation
 - Helper functions (crypt, time, file, config, etc.)
-- Validators
 - Modules và Libraries
 - AF Crypt Integration
 

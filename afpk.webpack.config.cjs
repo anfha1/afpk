@@ -22,9 +22,12 @@ module.exports = {
   },
   externals: [
     nodeExternals({
-      // Không externalize af-common-min, bundle nó vào
+      // Bundle tất cả dependencies CommonJS vào, chỉ externalize native modules
       // Các native modules (sqlite3, better-sqlite3) sẽ tự động được externalize
-      allowlist: [/^af-common-min/]
+      // Temporarily externalize af-common-min to test if the issue is from af-common-min
+      // Externalize ua-parser-js để tránh vấn đề với import.meta.url trong createRequire
+      // Nó sẽ được install từ dependencies và import dynamic khi runtime
+      allowlist: [/^express/, /^cookie-parser/, /^cookie/, /^cors/, /^socket\.io/, /^better-sqlite3/, /^fs-extra/, /^googleapis/, /^http-proxy-middleware/]
     })
   ],
   /* externals: {
@@ -53,6 +56,8 @@ module.exports = {
       renameGlobals: false,
       simplify: true,
       splitStringsChunkLength: 10,
+      // Preserve exports để giữ lại các exports trong default export object
+      reservedNames: ['UAParser', 'sqlite3', 'cors', 'cookieParser', 'Server', 'fsExtra', 'createProxyMiddleware', 'express', 'cookie', 'cryptoJs', 'DateTime'],
     }, [
       '**/node_modules/**',
     ]),

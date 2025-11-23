@@ -1,7 +1,8 @@
 import { encode, decode } from '#helper/crypt.mjs'
 import regFn from '#helper/regFn.mjs'
 
-import { EOn } from 'af-common-min'
+import afCommonMin from 'af-common-min'
+const { EOn } = afCommonMin.module
 
 export default class {
   constructor(socket, config = {}) {
