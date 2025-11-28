@@ -29,10 +29,8 @@ const DEFAULT_CONFIG = {
 export default class {
   constructor() {
     this.app = express()
-    this.service = {
-      config: { ...DEFAULT_CONFIG },
-      refIdSs: 0,
-    }
+    this.config = { ...DEFAULT_CONFIG }
+    this.refIdSs = 0
 
     this.cookie = {
       /**
@@ -71,48 +69,48 @@ export default class {
    */
   checkConfigServer() {
     // Ensure config object exists
-    if (!this.service.config) {
-      this.service.config = {}
+    if (!this.config) {
+      this.config = {}
     }
 
     // Socket configuration
     // true: enable with default config, false: disable, object: custom config
-    if (this.service.config.socket === undefined) {
-      this.service.config.socket = DEFAULT_CONFIG.socket
+    if (this.config.socket === undefined) {
+      this.config.socket = DEFAULT_CONFIG.socket
     }
 
     // Express configuration
-    if (!this.service.config.express || typeof this.service.config.express !== 'object') {
-      this.service.config.express = {}
+    if (!this.config.express || typeof this.config.express !== 'object') {
+      this.config.express = {}
     }
-    this.service.config.express.json = this.service.config.express.json ?? DEFAULT_CONFIG.express.json
-    this.service.config.express.cors = this.service.config.express.cors ?? DEFAULT_CONFIG.express.cors
-    this.service.config.express.static = this.service.config.express.static ?? DEFAULT_CONFIG.express.static
+    this.config.express.json = this.config.express.json ?? DEFAULT_CONFIG.express.json
+    this.config.express.cors = this.config.express.cors ?? DEFAULT_CONFIG.express.cors
+    this.config.express.static = this.config.express.static ?? DEFAULT_CONFIG.express.static
 
     // Cookie configuration
     // Support backward compatibility: express.cookie = false to disable
-    const cookieDisabled = this.service.config.express?.cookie === false
+    const cookieDisabled = this.config.express?.cookie === false
 
-    if (!this.service.config.cookie || typeof this.service.config.cookie !== 'object') {
-      this.service.config.cookie = {}
+    if (!this.config.cookie || typeof this.config.cookie !== 'object') {
+      this.config.cookie = {}
     }
-    this.service.config.cookie.salt = this.service.config.cookie.salt ?? DEFAULT_CONFIG.cookie.salt
+    this.config.cookie.salt = this.config.cookie.salt ?? DEFAULT_CONFIG.cookie.salt
 
     // Check both new and old way to disable cookies
     if (cookieDisabled) {
-      this.service.config.cookie.enabled = false
+      this.config.cookie.enabled = false
     } else {
-      this.service.config.cookie.enabled = this.service.config.cookie.enabled ?? DEFAULT_CONFIG.cookie.enabled
+      this.config.cookie.enabled = this.config.cookie.enabled ?? DEFAULT_CONFIG.cookie.enabled
     }
 
     // Port configuration
-    this.service.config.port = this.service.config.port ?? DEFAULT_CONFIG.port
+    this.config.port = this.config.port ?? DEFAULT_CONFIG.port
 
     // Event handlers
-    if (!this.service.config.on || typeof this.service.config.on !== 'object') {
-      this.service.config.on = {}
+    if (!this.config.on || typeof this.config.on !== 'object') {
+      this.config.on = {}
     }
-    this.service.config.on.start = this.service.config.on.start ?? DEFAULT_CONFIG.on.start
+    this.config.on.start = this.config.on.start ?? DEFAULT_CONFIG.on.start
   }
 
   /**
@@ -125,7 +123,7 @@ export default class {
     this._setupExpressMiddleware()
 
     // Setup cookie handling
-    if (this.service.config.cookie.enabled) {
+    if (this.config.cookie.enabled) {
       this._setupCookieMiddleware()
     }
 
@@ -133,16 +131,16 @@ export default class {
     this.http = createServer(this.app)
 
     // Setup Socket.io if enabled
-    if (this.service.config.socket) {
-      const socketConfig = typeof this.service.config.socket === 'object'
-        ? this.service.config.socket
+    if (this.config.socket) {
+      const socketConfig = typeof this.config.socket === 'object'
+        ? this.config.socket
         : undefined
       this.io = new Server(this.http, socketConfig)
     }
 
     // Start listening if port is configured
-    if (this.service.config.port) {
-      this.http.listen(this.service.config.port, this.service.config.on.start)
+    if (this.config.port) {
+      this.http.listen(this.config.port, this.config.on.start)
     }
 
     return this
@@ -154,16 +152,16 @@ export default class {
    */
   _setupExpressMiddleware() {
     // JSON parser
-    if (this.service.config.express.json) {
+    if (this.config.express.json) {
       this.app.use(express.json())
     }
 
     // CORS
-    this.app.use(cors(this.service.config.express.cors))
+    this.app.use(cors(this.config.express.cors))
 
     // Static files
-    if (this.service.config.express.static) {
-      this.app.use(express.static(this.service.config.express.static))
+    if (this.config.express.static) {
+      this.app.use(express.static(this.config.express.static))
     }
   }
 
@@ -173,7 +171,7 @@ export default class {
    */
   _setupCookieMiddleware() {
     // Initialize cookie parser with salt
-    this.app.use(cookieParser(this.service.config.cookie.salt))
+    this.app.use(cookieParser(this.config.cookie.salt))
 
     // Middleware to create SSID cookie if not present
     this.app.use((req, res, next) => {
@@ -181,7 +179,7 @@ export default class {
 
       if (!ssid) {
         // Generate new SSID using crypt helper from af-common-min
-        const ssidValue = helper.crypt.encode(++this.service.refIdSs)
+        const ssidValue = helper.crypt.encode(++this.refIdSs)
 
         res.cookie('SSID', ssidValue, {
           httpOnly: true,

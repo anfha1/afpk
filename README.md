@@ -1,6 +1,6 @@
 # 📦 AFPK - AF-Tech Package
 
-**Version:** 1.1.4
+**Version:** 1.1.5
 
 Package chứa các module và helper dùng chung cho backend projects.
 
@@ -26,9 +26,10 @@ pnpm add afpk-min
 
 **Lưu ý:**
 - **Development**: Dùng `afpk` hoặc `npm link afpk` để dễ debug
-- **Production**: Dùng `afpk-min@^1.1.4` để bảo mật code (đã obfuscate)
+- **Production**: Dùng `afpk-min@^1.1.5` để bảo mật code (đã obfuscate)
 - `afpk-min` có cùng API với `afpk`, chỉ khác là code đã được obfuscate
 - **afpk-min đã bundle af-common-min@^1.0.6** - Backend chỉ cần `afpk-min`, không cần `af-common-min` riêng
+- ⚠️ **Breaking change v1.1.5**: Server module đã được refactor thành class-based. Sử dụng `server.config` thay vì `server.service.config`
 - ⚠️ **Breaking change v1.0.5**: `encodeE2E`/`decodeE2E` đã được loại bỏ từ af-common-min, sử dụng `encodeAdvanced`/`decodeAdvanced` thay thế
 - **Cấu trúc namespace:** 
   - Modules trong `module` namespace (ví dụ: `afpk.module.Server`)
@@ -113,7 +114,7 @@ const { Server } = afpk.module
 
 // Server module
 const server = new Server()
-server.service.config.port = 3000
+server.config.port = 3000
 server.start()
 ```
 
@@ -128,9 +129,9 @@ const { Server } = afpk.module
 const server = new Server()
 
 // Cấu hình (có thể set trước hoặc sau khi tạo instance)
-server.service.config = {
+server.config = {
   port: 3000,
-  socket: true, // Enable Socket.io
+  socket: true, // Enable Socket.io (true = default, false = disable, object = custom config)
   express: {
     json: true, // Enable JSON parser
     cors: {}, // CORS config (empty = default)
@@ -145,7 +146,12 @@ server.service.config = {
   }
 }
 
-// Khởi động server
+// Hoặc cấu hình từng phần
+server.config.port = 3000
+server.config.express.static = './public'
+server.config.express.cookie = false // Disable cookies (backward compatible)
+
+// Khởi động server (tự động gọi checkConfigServer và setup middleware)
 server.start()
 
 // Sử dụng Express app
@@ -160,13 +166,14 @@ if (server.io) {
   })
 }
 
-// Parse cookies
+// Parse cookies từ raw cookie string
 const cookies = server.cookie.parse(req.headers.cookie)
+// Hỗ trợ signed cookies (format: s:value.signature)
 ```
 
 ## 🔧 Thông Số Kỹ Thuật
 
-- **Version**: 1.1.4
+- **Version**: 1.1.5
 - **Type**: ES Modules
 - **License**: AF-Tech
 - **afpk-min**: Externalize dependencies, chỉ bundle code afpk
@@ -233,6 +240,6 @@ Xem [Tài liệu đầy đủ](../doc/projects/afpk.md) để biết:
 
 ---
 
-**Version:** 1.1.4  
+**Version:** 1.1.5  
 **Author:** AF-Tech/@david  
 **Last Updated:** 2025-11-27
